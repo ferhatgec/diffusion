@@ -120,6 +120,67 @@ FInterpreter::Read(std::string file) {
     	}
 }
 
+std::string
+FInterpreter::GetObject(std::string file, std::string tag, int wh) {
+	Tokenizer token;
+	std::string line;
+    	std::ifstream readfile((fsplusplus::GetCurrentWorkingDir() + "/" + file).c_str());
+    	if(readfile.is_open()) {
+        while (std::getline(readfile, line)) {
+        	Read(file);
+        	// Single Comment Line
+        	if(FindObject(line, token.SingleCommentLine) == true) {
+        		line.erase();
+        	}
+        	
+        	// Single Comment Line
+        	if(FindObject(line, token.CommentLineBegin) == true) {
+			std::string assign;
+			GetBtwString(line, token.CommentLineBegin, token.CommentLineEnd, assign);
+			if(assign != "error") {
+				 line = EraseAllSubString(line, token.CommentLineBegin + assign + token.CommentLineEnd);
+			} else {
+				if(FCommentLine(file, "</") == true) {
+				} else {
+					printf("token.CommentLine Error\n");
+					return "errcomment";
+				}
+			}	       	
+        	}
+
+        	if(FindObject(line, "main() {") == true) {
+			std::string tagdiff, incdiff;        		
+			Read(file);
+        		GetBtwString(alltext, "main() {", "}end", alltext);
+        		std::istringstream f(alltext);
+			std::cout << "Main:\n";
+        		while(std::getline(f, linebyline)) {
+				GetBtwString(linebyline, "#tag[", "]", tagdiff);   
+				if(tagdiff != "error") {
+					GetBtwString(linebyline, "{", "}", incdiff);
+					if(incdiff != "error") {
+						std::string namediff, datadiff;
+						GetBtwString(incdiff, "<", ">", namediff);
+						GetBtwString(incdiff, "\"", "\"", datadiff);
+						if(wh == 0) { return datadiff; } else if(wh == 1) { return namediff; } else {  
+							return datadiff;
+						} 
+					} else {
+						return "errcurlybracket";
+					}					
+					// std::cout << namediff << " : " << datadiff << "\n";  				
+				}				
+        		}
+        	}
+	}
+	} else {
+		printf("Unable to open file\n");
+		return "unable";	
+	}
+	return "null";	
+}
+
+
 void 
 FInterpreter::DifFusionInterpreter(std::string file) {
 	Tokenizer token;
@@ -149,7 +210,7 @@ FInterpreter::DifFusionInterpreter(std::string file) {
 
 		/*
 		main() {
-			{<name>"DifFusion"}
+			{<name>"DifFusion"}#tag[projectname]
 			{<version>"0.1")
 			{<state>"beta-1"}
 			{<about>"Data Interchange Format"}

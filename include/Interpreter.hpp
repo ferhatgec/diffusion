@@ -18,12 +18,13 @@ public:
 	~FInterpreter();
 	std::string Whitespace = " ";
 	static bool FindObject(std::string, std::string);
-	void DifFusionInterpreter(std::string);
-	bool ReadFileWithReturn(std::string, std::string);
-	bool FCommentLine(std::string, std::string);
-	void Read(std::string);
-	void GetBtwString(std::string, std::string, std::string, std::string &);
-	std::string EraseAllSubString(std::string &, const std::string &);	
+	static void DifFusionInterpreter(std::string);
+	static bool ReadFileWithReturn(std::string, std::string);
+	static bool FCommentLine(std::string, std::string);
+	static void Read(std::string);
+	static void GetBtwString(std::string, std::string, std::string, std::string &);
+	static std::string EraseAllSubString(std::string &, const std::string &);	
+	static std::string GetObject(std::string, std::string, int);
 };
 
 #endif // INTERPRETER_HPP

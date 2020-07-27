@@ -17,8 +17,8 @@
 
 class DiffVersion {
 public:
-	std::string Time();
-	std::string VersionAlgorithm();
+	static std::string Time();
+	static std::string VersionAlgorithm();
 };
 
 #endif // DIFF_VERSION_HPP
