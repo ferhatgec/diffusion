@@ -1,3 +1,3 @@
 #!/bin/sh
 
-g++ ./diffusion/DifFusionMain.cpp ./diffusion/Interpreter.cpp -o diff && ./diff
+g++ -I./include/ ./diffusion/DiffVersion.cpp ./diffusion/Interpreter.cpp ./diffusion/DifFusionMain.cpp -o diff && ./diff

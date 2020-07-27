@@ -6,15 +6,16 @@
 # */
 
 #include <iostream>
-#include "../include/Interpreter.hpp"
-#include "../include/DifFusionMain.hpp"
+#include <Interpreter.hpp>
+#include <DifFusionMain.hpp>
+#include <DiffVersion.hpp>
 
 #include "../Library/FileSystemPlusPlus.h"
 
 #define EXIT_SUCCESS 0
 
 void HelpFunction() {
-	printf("Fegeya DifFusion\ndiffusion --b <file>: Interprets your inputted variable DifFusion code\ndiffusion -v : Shows version\n");
+	printf("Fegeya DifFusion\ndiffusion --b <file>: Interprets your inputted variable DifFusion code\ndiffusion --v : Shows version\n");
 }
 
 int main(int argc, char** argv) {
@@ -22,15 +23,18 @@ int main(int argc, char** argv) {
 		for(int i = 1; i < argc; i++) {
 			std::string arg(argv[i]);
 			if(arg.substr(0, 2) == "--") {
-				if(arg == "--help" || arg == "--h") {
-					HelpFunction();
-					exit(EXIT_SUCCESS);
-				} else if(arg == "--b" || arg == "--build") {
+				 if(arg == "--b" || arg == "--build") {
 					FInterpreter interp;
 					std::cout << "File: ";
 					std::getline(std::cin, arg);
 					interp.DifFusionInterpreter(arg);
-				}
+				} else if(arg == "--help" || arg == "--h") {
+					HelpFunction();
+					exit(EXIT_SUCCESS);
+				} else if(arg == "--version" || arg == "--v") {
+					DiffVersion vers;
+					std::cout << vers.VersionAlgorithm() << "\n";
+				}	
 			} else {
 				HelpFunction();
 			}
@@ -38,4 +42,5 @@ int main(int argc, char** argv) {
         } else {
         	HelpFunction();
         }
+	return 0;
 }

@@ -8,8 +8,8 @@
 #include <sstream>
 #include <fstream>
 #include <iostream>
-#include "../include/Tokenizer.hpp"
-#include "../include/Interpreter.hpp"
+#include <Tokenizer.hpp>
+#include <Interpreter.hpp>
 
 // Libraries
 #include "../Library/FileSystemPlusPlus.h"
