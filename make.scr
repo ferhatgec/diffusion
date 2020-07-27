@@ -1,0 +1,3 @@
+system("g++ ./diffusion/DifFusionMain.cpp ./diffusion/Interpreter.cpp -o diff");
+system("./diff");
+return
